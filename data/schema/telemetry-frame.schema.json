@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://racemind.app/schema/telemetry-frame.schema.json",
+  "title": "TelemetryFrame",
+  "description": "One 10 Hz frame of derived F1 telemetry: the output of the physics models in docs/tech-stack.md, and what the pit wall and HUD both render. Mirrors the Redis hot-state keys under race:{id}:*.",
+  "type": "object",
+  "required": ["t", "lap", "track_pos", "sector", "speed_kmh", "tyres", "fuel", "ers", "brakes"],
+  "properties": {
+    "t": { "type": "number", "description": "Seconds since race start." },
+    "lap": { "type": "integer", "minimum": 1 },
+    "lap_time_s": { "type": "number", "minimum": 0 },
+    "track_pos": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMaximum": 1,
+      "description": "Normalised position around the lap."
+    },
+    "sector": { "type": "integer", "enum": [1, 2, 3] },
+    "lat": { "type": "number" },
+    "lon": { "type": "number" },
+    "speed_kmh": { "type": "number", "minimum": 0 },
+    "rpm": { "type": "number", "minimum": 0 },
+    "gear": { "type": "integer", "minimum": 1, "maximum": 8 },
+    "throttle_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "brake_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "steering_deg": { "type": "number" },
+    "lateral_g": { "type": "number" },
+    "longitudinal_g": { "type": "number" },
+    "tyres": {
+      "type": "object",
+      "required": ["compound", "wear_pct", "grip_level", "age_laps", "temps_c", "pressures_psi"],
+      "properties": {
+        "compound": { "enum": ["soft", "medium", "hard", "intermediate", "wet"] },
+        "wear_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "grip_level": { "type": "number", "minimum": 0, "maximum": 1 },
+        "age_laps": { "type": "integer", "minimum": 0 },
+        "temps_c": { "$ref": "#/$defs/corners" },
+        "pressures_psi": { "$ref": "#/$defs/corners" }
+      }
+    },
+    "fuel": {
+      "type": "object",
+      "required": ["remaining_kg", "flow_rate_kg_h"],
+      "properties": {
+        "remaining_kg": { "type": "number", "minimum": 0 },
+        "flow_rate_kg_h": { "type": "number", "minimum": 0 },
+        "avg_per_lap_kg": { "type": "number", "minimum": 0 },
+        "laps_remaining": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "ers": {
+      "type": "object",
+      "required": ["soc_pct", "mode", "power_kw"],
+      "properties": {
+        "soc_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "mode": { "enum": ["deploy", "harvest", "balanced"] },
+        "power_kw": {
+          "type": "number",
+          "description": "Positive harvesting into the store, negative deploying out of it."
+        },
+        "harvested_mj": { "type": "number", "minimum": 0 },
+        "deployed_mj": { "type": "number", "minimum": 0 }
+      }
+    },
+    "brakes": {
+      "type": "object",
+      "required": ["temps_c"],
+      "properties": {
+        "temps_c": { "$ref": "#/$defs/corners" },
+        "pad_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "fade": { "type": "boolean" }
+      }
+    },
+    "weather": {
+      "type": "object",
+      "properties": {
+        "air_temp_c": { "type": "number" },
+        "track_temp_c": { "type": "number" },
+        "wind_kmh": { "type": "number", "minimum": 0 },
+        "wind_dir": { "type": "string" },
+        "rain_mm_h": { "type": "number", "minimum": 0 },
+        "condition": { "enum": ["dry", "damp", "wet"] }
+      }
+    }
+  },
+  "$defs": {
+    "corners": {
+      "type": "object",
+      "description": "Per-wheel values: front-left, front-right, rear-left, rear-right.",
+      "required": ["fl", "fr", "rl", "rr"],
+      "properties": {
+        "fl": { "type": "number" },
+        "fr": { "type": "number" },
+        "rl": { "type": "number" },
+        "rr": { "type": "number" }
+      }
+    }
+  }
+}

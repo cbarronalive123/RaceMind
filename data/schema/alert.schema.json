@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://racemind.app/schema/alert.schema.json",
+  "title": "Alert",
+  "description": "An alert at any of the three tiers (docs/alert-system.md). 2a and 2b are created already 'sent'; 2c is created 'pending' and only reaches the driver once an engineer approves it.",
+  "type": "object",
+  "required": ["id", "tier", "severity", "lap", "title", "message", "status", "created_at"],
+  "properties": {
+    "id": { "type": "string" },
+    "tier": {
+      "enum": ["2a", "2b", "2c"],
+      "description": "2a preventative rule, 2b signal pattern, 2c anomaly requiring approval."
+    },
+    "severity": { "enum": ["low", "medium", "high", "critical"] },
+    "lap": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string" },
+    "message": {
+      "type": "string",
+      "description": "Driver-facing text, spoken by TTS on arrival. Short imperative sentences."
+    },
+    "status": {
+      "enum": ["pending", "sent", "dismissed"],
+      "description": "pending is 2c only, awaiting the engineer."
+    },
+    "created_at": { "type": "number", "description": "Seconds since race start." },
+    "rule_id": {
+      "type": "string",
+      "description": "For 2a/2b, which configured rule or pattern fired."
+    },
+    "sigma": {
+      "type": "number",
+      "description": "2c only: peak deviation that triggered detection."
+    },
+    "channels": {
+      "type": "array",
+      "description": "2c only: which channels deviated.",
+      "items": {
+        "type": "object",
+        "required": ["name", "sigma"],
+        "properties": {
+          "name": { "type": "string" },
+          "sigma": { "type": "number" }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "string",
+      "description": "2c only: Gemma's proposed driver message, editable by the engineer before approval."
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "description": "Race-level defaults for the Race Configuration view and the simulator.",
+  "track_key": "club",
+  "total_laps": 57,
+  "starting_compound": "medium",
+  "telemetry_hz": 10,
+  "strategy": {
+    "plan": "1-stop · Medium → Hard @ Lap 25",
+    "stint_length_laps": 25,
+    "pit_window_laps": [23, 28],
+    "confidence_pct": 82,
+    "delta_vs_alt_s": 0.4,
+    "max_pit_stops": 2,
+    "min_stint_laps": 10,
+    "available_compounds": ["soft", "medium", "hard"],
+    "safety_car_probability": "low"
+  },
+  "targets": {
+    "description": "Nominal until the pre-race report runs. The simulator recalibrates both off the first flying lap.",
+    "nominal_avg_speed_kmh": 168,
+    "fuel_per_lap_kg": 1.72,
+    "fuel_margin_pct": 6
+  },
+  "fuel_policy": {
+    "description": "In-race refuelling has been banned in Formula 1 since 2010, and nothing in the schema carries a refuel event — a car starts with its whole race load. The simulator therefore sizes the starting load from the race distance rather than from a fixed number of kilograms, so that laps-of-fuel-remaining stays just above laps-left-to-run for the whole race instead of running hundreds of laps clear of it. fuel_margin_pct above is how much is carried over the race's own requirement, and is the only fuel lever the strategy has.",
+    "refuelling_allowed": false
+  }
+}

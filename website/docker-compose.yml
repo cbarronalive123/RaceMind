@@ -1,0 +1,53 @@
+services:
+  racemind-db:
+    image: postgres:16-alpine
+    container_name: racemind-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: racemind
+      POSTGRES_PASSWORD: racemind
+      POSTGRES_DB: racemind
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - racemind_pgdata:/var/lib/postgresql/data
+      - ./website/server/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    networks:
+      - racemind-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U racemind"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  racemind-web:
+    build:
+      context: .
+      dockerfile: website/Dockerfile
+    container_name: racemind-web
+    restart: unless-stopped
+    depends_on:
+      racemind-db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3003
+      RACE_WS_PORT: 3004
+      PGHOST: racemind-db
+      PGPORT: 5432
+      PGDATABASE: racemind
+      PGUSER: racemind
+      PGPASSWORD: racemind
+      NEXT_PUBLIC_GOOGLE_MAPS_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_KEY:-}
+    ports:
+      - "127.0.0.1:3003:3003"
+      - "127.0.0.1:3004:3004"
+    networks:
+      - racemind-net
+
+volumes:
+  racemind_pgdata:
+
+networks:
+  racemind-net:
+    driver: bridge

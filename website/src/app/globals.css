@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/*
+  Pit Wall dark theme — see docs/website-dashboard.md.
+  Typography and UI edges are strictly white/grey.
+  Colour is reserved for data meaning (status lights, gauges, compounds).
+*/
+@theme {
+  --color-pit-black: #000000;
+  --color-pit-blue: #0a0f1e;
+  --color-pit-panel: #111111;
+  --color-pit-panel-2: #161616;
+  --color-pit-border: #2e2e2e;
+
+  --color-ink: #ffffff;
+  --color-ink-body: #e0e0e0;
+  --color-ink-secondary: #a0a0a0;
+  --color-ink-muted: #606060;
+
+  --color-status-ok: #00c853;
+  --color-status-warn: #ffab00;
+  --color-status-crit: #d50000;
+
+  --color-data-ers: #2979ff;
+  --color-data-soft: #d50000;
+  --color-data-medium: #ffd600;
+  --color-data-hard: #ffffff;
+
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, #000000 0%, #0a0f1e 100%);
+  background-attachment: fixed;
+  color: var(--color-ink-body);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numeric readouts are monospaced so digits don't jitter at 10 Hz. */
+.tnum {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes pit-pulse {
+  0%,
+  100% {
+    border-color: var(--color-status-crit);
+    box-shadow: 0 0 0 0 rgba(213, 0, 0, 0.35);
+  }
+  50% {
+    border-color: #ff5252;
+    box-shadow: 0 0 0 4px rgba(213, 0, 0, 0);
+  }
+}
+
+.pending-pulse {
+  animation: pit-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hud-flash {
+  0%,
+  100% {
+    background-color: rgba(213, 0, 0, 0.18);
+  }
+  50% {
+    background-color: rgba(213, 0, 0, 0.42);
+  }
+}
+
+.hud-flash {
+  animation: hud-flash 0.9s ease-in-out infinite;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2e2e2e;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pending-pulse,
+  .hud-flash {
+    animation: none;
+  }
+}
+
+/*
+  Replay chrome. Historical archives must never read as live telemetry, so
+  they carry a hatched surface and a dashed edge that nothing live uses.
+  Greyscale only, per the palette rules above.
+*/
+.replay-hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.035) 0px,
+    rgba(255, 255, 255, 0.035) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+}

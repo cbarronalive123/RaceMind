@@ -1,0 +1,41 @@
+{
+  "description": "Default 2026-spec vehicle configuration. Seeds the Race Configuration view and the physics models on both clients.",
+  "mass_kg": 798,
+  "fuel": {
+    "capacity_kg": 110,
+    "starting_kg": 100,
+    "max_flow_kg_h": 100
+  },
+  "ers": {
+    "capacity_mj": 4.0,
+    "mgu_k_max_kw": 350,
+    "deploy_max_kw": 200,
+    "max_harvest_per_lap_mj": 8.5
+  },
+  "brakes": {
+    "bias_front_pct": 57,
+    "fade_temp_c": 1000,
+    "min_temp_c": 200,
+    "max_temp_c": 1150
+  },
+  "aero": {
+    "front_wing_deg": 12,
+    "rear_wing_deg": 8
+  },
+  "tyre_pressures_psi": {
+    "front": 21.0,
+    "rear": 19.5
+  },
+  "limits": {
+    "max_lateral_g": 3.8,
+    "max_speed_kmh": 328,
+    "min_speed_kmh": 74,
+    "max_accel_ms2": 11,
+    "max_decel_ms2": 42
+  },
+  "gearbox": {
+    "gear_upshift_speeds_kmh": [0, 62, 108, 152, 194, 234, 272, 302],
+    "rpm_min": 8200,
+    "rpm_max": 14800
+  }
+}

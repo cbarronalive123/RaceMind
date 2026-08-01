@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://racemind.app/schema/lap-summary.schema.json",
+  "title": "LapSummary",
+  "description": "One completed lap. Backs the timing tower and the per-lap trend inputs to Gemma.",
+  "type": "object",
+  "required": ["lap", "s1", "s2", "s3", "total", "fuel_kg", "wear_pct"],
+  "properties": {
+    "lap": { "type": "integer", "minimum": 1 },
+    "s1": { "type": "number", "minimum": 0, "description": "Sector 1 time, seconds." },
+    "s2": { "type": "number", "minimum": 0 },
+    "s3": { "type": "number", "minimum": 0 },
+    "total": { "type": "number", "minimum": 0, "description": "Lap time, seconds." },
+    "delta_to_target_s": { "type": "number" },
+    "fuel_kg": { "type": "number", "minimum": 0, "description": "Fuel burned on this lap." },
+    "wear_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "ers_harvested_mj": { "type": "number", "minimum": 0 },
+    "ers_deployed_mj": { "type": "number", "minimum": 0 },
+    "compound": { "enum": ["soft", "medium", "hard", "intermediate", "wet"] },
+    "alert_tier": { "enum": ["2a", "2b", "2c", null] }
+  }
+}

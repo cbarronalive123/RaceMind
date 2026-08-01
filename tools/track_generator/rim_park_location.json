@@ -1,0 +1,20 @@
+{
+  "name": "RIM Park",
+  "address": "2001 University Ave E, Waterloo, ON N2K 4K4, Canada",
+  "lat": 43.5168813,
+  "lon": -80.4964103,
+  "bounds": {
+    "min_lat": 43.5124482,
+    "max_lat": 43.5216242,
+    "min_lon": -80.5135042,
+    "max_lon": -80.4910992
+  },
+  "osm": {
+    "type": "relation",
+    "id": 9062632,
+    "url": "https://www.openstreetmap.org/relation/9062632",
+    "tags": { "leisure": "park", "name": "RIM Park" }
+  },
+  "source": "OpenStreetMap / Nominatim -- centroid of the RIM Park park relation",
+  "note": "Centroid and bounding box of the RIM Park parcel. The circuits in tracks/ are built from OSM road centrelines inside this area, so they lie on real pavement. For a race-accurate racing line, capture a live GPS trace on-site with the mobile app (docs/mobile-app.md Screen 2, docs/map-technology.md)."
+}

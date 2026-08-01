@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://racemind.app/schema/sensor-packet.schema.json",
+  "title": "SensorPacket",
+  "description": "Raw phone sensor packet, sent app -> backend over WebSocket at 10 Hz (docs/mobile-app.md). This is the only thing the app produces during a race; every F1 channel is derived from it server-side.",
+  "type": "object",
+  "required": ["ts", "race_id", "gps", "imu"],
+  "properties": {
+    "ts": {
+      "type": "number",
+      "description": "Unix epoch seconds with millisecond precision."
+    },
+    "race_id": { "type": "string" },
+    "gps": {
+      "type": "object",
+      "required": ["lat", "lon", "speed_ms"],
+      "properties": {
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+        "speed_ms": { "type": "number", "minimum": 0 },
+        "heading_deg": { "type": "number", "minimum": 0, "exclusiveMaximum": 360 },
+        "altitude_m": { "type": "number" },
+        "accuracy_m": { "type": "number", "minimum": 0 }
+      }
+    },
+    "imu": {
+      "type": "object",
+      "description": "Axes already remapped on-device per the phone's orientation mode.",
+      "required": ["accel_x", "accel_y", "accel_z", "gyro_x", "gyro_y", "gyro_z"],
+      "properties": {
+        "accel_x": { "type": "number", "description": "Lateral, g" },
+        "accel_y": { "type": "number", "description": "Longitudinal, g" },
+        "accel_z": { "type": "number", "description": "Vertical, g" },
+        "gyro_x": { "type": "number", "description": "Roll rate, rad/s" },
+        "gyro_y": { "type": "number", "description": "Pitch rate, rad/s" },
+        "gyro_z": { "type": "number", "description": "Yaw rate, rad/s" }
+      }
+    },
+    "baro": {
+      "type": "object",
+      "properties": { "pressure_mbar": { "type": "number" } }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "battery_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "orientation": { "enum": ["pocket", "hand", "armband"] }
+      }
+    }
+  }
+}

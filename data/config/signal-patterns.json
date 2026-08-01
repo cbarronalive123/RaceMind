@@ -1,0 +1,37 @@
+{
+  "description": "Tier 2b signal detection patterns (docs/alert-system.md). Match a shape in the data rather than a single threshold. Like 2a, they reach the driver without approval.",
+  "tier": "2b",
+  "patterns": [
+    {
+      "id": "oil-drift",
+      "label": "Oil temp drift",
+      "detail": "window 5 laps · slope 0.02",
+      "enabled": true,
+      "params": { "window_laps": 5, "slope_threshold": 0.02 }
+    },
+    {
+      "id": "tyre-asym",
+      "label": "Tyre asymmetry",
+      "detail": "delta > 15°C",
+      "enabled": true,
+      "params": { "delta_threshold_c": 15 },
+      "cooldown_laps": 6
+    },
+    {
+      "id": "ers-harvest",
+      "label": "ERS harvest decline",
+      "detail": "min 5.0 MJ",
+      "enabled": true,
+      "params": { "min_harvest_mj": 5.0 },
+      "cooldown_laps": 6
+    },
+    {
+      "id": "fuel-over",
+      "label": "Fuel overconsumption",
+      "detail": "target 1.72 kg/lap",
+      "enabled": true,
+      "params": { "over_target_ratio": 1.06 },
+      "cooldown_laps": 5
+    }
+  ]
+}

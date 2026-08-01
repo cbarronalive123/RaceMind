@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!--
+    Chequered flag, zoomed until the weave runs off every edge.
+
+    Cell size and angle are tuned for the 16px tab favicon, where the whole
+    thing is about four cells across: coarser and it reads as an abstract
+    pinwheel, finer and it dissolves into noise. The tilt is what sells it as
+    a flag rather than a checkerboard.
+
+    Greyscale only, per the pit-wall palette in docs/website-dashboard.md.
+  -->
+  <defs>
+    <pattern
+      id="chequer"
+      width="26"
+      height="26"
+      patternUnits="userSpaceOnUse"
+      patternTransform="rotate(-14 16 16)"
+    >
+      <rect width="26" height="26" fill="#111111" />
+      <rect width="13" height="13" fill="#ffffff" />
+      <rect x="13" y="13" width="13" height="13" fill="#ffffff" />
+    </pattern>
+  </defs>
+
+  <rect width="32" height="32" rx="6" fill="url(#chequer)" />
+</svg>

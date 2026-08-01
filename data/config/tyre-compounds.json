@@ -1,0 +1,47 @@
+{
+  "description": "Tyre compounds. wear_factor and fuel_factor are multipliers applied to the base rates in the degradation and fuel models (docs/tech-stack.md).",
+  "optimal_temp_window_c": [85, 105],
+  "grip_cliff_wear_pct": 62,
+  "compounds": [
+    {
+      "key": "soft",
+      "label": "SOFT",
+      "color": "#d50000",
+      "wear_factor": 1.55,
+      "fuel_factor": 1.05,
+      "expected_life_laps": 18
+    },
+    {
+      "key": "medium",
+      "label": "MEDIUM",
+      "color": "#ffd600",
+      "wear_factor": 1.0,
+      "fuel_factor": 1.0,
+      "expected_life_laps": 30
+    },
+    {
+      "key": "hard",
+      "label": "HARD",
+      "color": "#ffffff",
+      "wear_factor": 0.72,
+      "fuel_factor": 0.97,
+      "expected_life_laps": 42
+    },
+    {
+      "key": "intermediate",
+      "label": "INTER",
+      "color": "#00c853",
+      "wear_factor": 1.2,
+      "fuel_factor": 1.08,
+      "expected_life_laps": 25
+    },
+    {
+      "key": "wet",
+      "label": "WET",
+      "color": "#2979ff",
+      "wear_factor": 1.3,
+      "fuel_factor": 1.12,
+      "expected_life_laps": 22
+    }
+  ]
+}

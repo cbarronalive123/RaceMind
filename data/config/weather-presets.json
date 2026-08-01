@@ -1,0 +1,61 @@
+{
+  "description": "Seed conditions for the test lap and pre-race report, plus the live weather simulator's event cadence (docs/weather-system.md).",
+  "default_preset": "warm-dry",
+  "presets": [
+    {
+      "key": "warm-dry",
+      "label": "Warm and dry",
+      "air_temp_c": 28,
+      "track_temp_c": 42,
+      "humidity_pct": 45,
+      "wind_kmh": 12,
+      "wind_dir": "NW",
+      "rain_mm_h": 0,
+      "condition": "dry"
+    },
+    {
+      "key": "cool-dry",
+      "label": "Cool and dry",
+      "air_temp_c": 14,
+      "track_temp_c": 19,
+      "humidity_pct": 60,
+      "wind_kmh": 22,
+      "wind_dir": "W",
+      "rain_mm_h": 0,
+      "condition": "dry"
+    },
+    {
+      "key": "damp",
+      "label": "Damp track",
+      "air_temp_c": 18,
+      "track_temp_c": 21,
+      "humidity_pct": 88,
+      "wind_kmh": 9,
+      "wind_dir": "S",
+      "rain_mm_h": 0.4,
+      "condition": "damp"
+    },
+    {
+      "key": "wet",
+      "label": "Wet",
+      "air_temp_c": 16,
+      "track_temp_c": 17,
+      "humidity_pct": 96,
+      "wind_kmh": 26,
+      "wind_dir": "SW",
+      "rain_mm_h": 4.2,
+      "condition": "wet"
+    }
+  ],
+  "simulator": {
+    "selected_intensity": "normal",
+    "intensities": [
+      { "key": "calm", "label": "Calm", "event_every_laps": 20 },
+      { "key": "normal", "label": "Normal", "event_every_laps": 7 },
+      { "key": "dramatic", "label": "Dramatic", "event_every_laps": 3 },
+      { "key": "off", "label": "Off", "event_every_laps": null }
+    ],
+    "notify_engineer": true,
+    "auto_reevaluate_strategy": true
+  }
+}

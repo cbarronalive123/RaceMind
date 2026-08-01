@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://racemind.app/schema/track.schema.json",
+  "title": "Track",
+  "description": "A closed-loop circuit as an ordered ring of GPS points. Produced by tools/track_generator from OSM road centrelines, or by the mobile app's Trace Track screen after backend smoothing.",
+  "type": "object",
+  "required": ["name", "key", "total_distance_m", "num_corners", "center", "bounds", "points"],
+  "properties": {
+    "name": { "type": "string" },
+    "key": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "source": { "type": "string" },
+    "roads": { "type": "array", "items": { "type": "string" } },
+    "total_distance_m": { "type": "number", "exclusiveMinimum": 0 },
+    "num_corners": { "type": "integer", "minimum": 0 },
+    "center": { "$ref": "#/$defs/latLon" },
+    "bounds": {
+      "type": "object",
+      "required": ["min_lat", "max_lat", "min_lon", "max_lon"],
+      "properties": {
+        "min_lat": { "type": "number" },
+        "max_lat": { "type": "number" },
+        "min_lon": { "type": "number" },
+        "max_lon": { "type": "number" }
+      }
+    },
+    "points": {
+      "type": "array",
+      "minItems": 8,
+      "description": "Ordered around the lap. The ring is implicitly closed: the last point connects back to the first.",
+      "items": {
+        "type": "object",
+        "required": ["seq", "lat", "lon", "point_type"],
+        "properties": {
+          "seq": { "type": "integer", "minimum": 0 },
+          "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+          "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+          "altitude_m": { "type": "number" },
+          "point_type": {
+            "enum": [
+              "track",
+              "start_finish",
+              "sector_line",
+              "pit_entry",
+              "pit_exit",
+              "drs_detection",
+              "drs_start",
+              "drs_end"
+            ]
+          },
+          "label": { "type": ["string", "null"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "latLon": {
+      "type": "object",
+      "required": ["lat", "lon"],
+      "properties": {
+        "lat": { "type": "number" },
+        "lon": { "type": "number" }
+      }
+    }
+  }
+}

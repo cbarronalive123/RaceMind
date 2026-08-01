@@ -1,0 +1,60 @@
+{
+  "description": "Tier 2a preventative rules (docs/alert-system.md). Fire automatically and go straight to the driver HUD without engineer approval. cooldown_laps stops a rule re-firing every tick once its condition is true.",
+  "tier": "2a",
+  "rules": [
+    {
+      "id": "brake-check",
+      "label": "Brake temp check",
+      "detail": "every 5 laps",
+      "severity": "low",
+      "enabled": true,
+      "trigger": { "type": "every_n_laps", "laps": 5 },
+      "cooldown_laps": 4
+    },
+    {
+      "id": "tyre-cliff",
+      "label": "Tyre cliff warning",
+      "detail": "wear > 55%",
+      "severity": "high",
+      "enabled": true,
+      "trigger": { "type": "threshold", "channel": "tyres.wear_pct", "op": ">", "value": 55 },
+      "cooldown_laps": 8
+    },
+    {
+      "id": "fuel-crit",
+      "label": "Fuel critical",
+      "detail": "< 3 laps fuel",
+      "severity": "critical",
+      "enabled": true,
+      "trigger": { "type": "threshold", "channel": "fuel.laps_remaining", "op": "<", "value": 3 },
+      "cooldown_laps": 3
+    },
+    {
+      "id": "ers-low",
+      "label": "ERS depleted",
+      "detail": "SOC < 10%",
+      "severity": "medium",
+      "enabled": true,
+      "trigger": { "type": "threshold", "channel": "ers.soc_pct", "op": "<", "value": 10 },
+      "cooldown_laps": 4
+    },
+    {
+      "id": "coolant",
+      "label": "Coolant overheat",
+      "detail": "> 120°C",
+      "severity": "high",
+      "enabled": true,
+      "trigger": { "type": "threshold", "channel": "engine.coolant_temp_c", "op": ">", "value": 120 },
+      "cooldown_laps": 4
+    },
+    {
+      "id": "stint-report",
+      "label": "Stint lap report",
+      "detail": "every 3 laps",
+      "severity": "low",
+      "enabled": false,
+      "trigger": { "type": "every_n_laps", "laps": 3 },
+      "cooldown_laps": 2
+    }
+  ]
+}

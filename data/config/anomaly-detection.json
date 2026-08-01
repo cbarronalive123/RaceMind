@@ -1,0 +1,58 @@
+{
+  "description": "Tier 2c anomaly detection (docs/alert-system.md). TimesFM flags a deviation, Gemma interprets it, and the engineer approves, edits, or dismisses before it reaches the driver. The templates are the canned interpretations the simulator emits until the real model is wired in.",
+  "tier": "2c",
+  "enabled": true,
+  "sensitivity": {
+    "selected": "normal",
+    "options": [
+      { "key": "low", "sigma": 3.5 },
+      { "key": "normal", "sigma": 2.5 },
+      { "key": "high", "sigma": 1.8 }
+    ]
+  },
+  "check_interval_s": 10,
+  "templates": [
+    {
+      "id": "brake-caliper-drift",
+      "title": "Brake caliper drift",
+      "severity": "high",
+      "sigma": 3.1,
+      "channels": [
+        { "name": "brake_temp_fl", "sigma": 3.1 },
+        { "name": "tyre_temp_fl", "sigma": 1.8 }
+      ],
+      "interpretation": "Left front brake caliper may be sticking. Generating excess heat that is transferring into the tyre.",
+      "recommendation": "Reduce braking T1 and T4. Rear bias up two clicks. Monitor two laps, box if no improvement."
+    },
+    {
+      "id": "ers-soc-decay",
+      "title": "ERS state of charge decay",
+      "severity": "medium",
+      "sigma": 2.6,
+      "channels": [{ "name": "ers_soc_pct", "sigma": 2.6 }],
+      "interpretation": "State of charge is declining faster than the deployment model predicts across the last four laps.",
+      "recommendation": "Switch to balanced deploy through S2 and rebuild charge before the pit window."
+    },
+    {
+      "id": "rear-axle-divergence",
+      "title": "Rear axle temperature divergence",
+      "severity": "high",
+      "sigma": 2.9,
+      "channels": [
+        { "name": "tyre_temp_rl", "sigma": 2.9 },
+        { "name": "tyre_temp_rr", "sigma": 2.2 }
+      ],
+      "interpretation": "Rear axle running hotter than the traction model expects for this fuel load and track temp.",
+      "recommendation": "Short shift out of T6 and T9. Protect the rears for the next three laps."
+    },
+    {
+      "id": "fuel-flow-instability",
+      "title": "Fuel flow instability",
+      "severity": "medium",
+      "sigma": 2.4,
+      "channels": [{ "name": "fuel_flow_kgh", "sigma": 2.4 }],
+      "interpretation": "Fuel flow rate oscillating outside the normal band on throttle application.",
+      "recommendation": "Smoother throttle pickup out of the slow corners."
+    }
+  ]
+}

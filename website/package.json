@@ -1,0 +1,44 @@
+{
+  "name": "racemind-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "audit:channels": "tsx scripts/audit-channels.ts",
+    "build": "next build",
+    "build:geometry": "tsx scripts/build-geometry.ts",
+    "dev": "next dev",
+    "dev:all": "concurrently -n web,race -c cyan,magenta \"next dev\" \"tsx watch server/index.ts\"",
+    "dev:server": "tsx watch server/index.ts",
+    "generate:data": "npm run build:geometry && tsx scripts/generate-data.ts",
+    "lint": "eslint",
+    "start": "next start",
+    "start:server": "tsx server/index.ts",
+    "typecheck": "tsc --noEmit",
+    "validate:data": "tsx scripts/validate-data.ts"
+  },
+  "dependencies": {
+    "@types/pg": "^8.20.3",
+    "next": "15.5.4",
+    "pg": "^8.22.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "ws": "^8.18.0",
+    "zustand": "5.0.8"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3.3.1",
+    "@tailwindcss/postcss": "4.1.14",
+    "@types/node": "24.7.0",
+    "@types/react": "19.1.9",
+    "@types/react-dom": "19.1.7",
+    "@types/ws": "^8.5.13",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "concurrently": "^9.1.0",
+    "eslint": "9.37.0",
+    "eslint-config-next": "15.5.4",
+    "tailwindcss": "4.1.14",
+    "tsx": "^4.20.6",
+    "typescript": "5.9.3"
+  }
+}
